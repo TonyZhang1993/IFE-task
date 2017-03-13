@@ -89,8 +89,8 @@
 		var btn = document.getElementById('btn');
 		btn.onclick = function(ev){
 			var ev = ev || window.event;
-　　　　    var target = ev.target || ev.srcElement;
-　　　　	switch(target.id.toLowerCase()){
+　　　　    	     var target = ev.target || ev.srcElement;
+　　　　		     switch(target.id.toLowerCase()){
 				case 'left_in': insertLeft();break;
 				case 'left_out': removeLeft();break;
 				case 'right_in': insertRight();break;
