@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js-task4</title>
+	<style>
+		.red{
+			height: 20px;
+			width: auto;
+			background: #FF0000;
+			float: left;
+			margin:10px;
+			padding: 10px;
+			border-radius:5px;
+			cursor: pointer;
+		}
+		[type="button"]{
+			border-radius:5px;
+		}
+	</style>
+</head>
+<body>
+	<input type="text" id="in-text" \>
+	<div id='btn'>
+		<input type="button" value="左侧入" id="left_in"/>
+		<input type="button" value="右侧入" id='right_in'/>
+		<input type="button" value="左侧出" id='left_out'/>
+		<input type="button" value="右侧出" id='right_out'/>
+	</div>
+	<div id='box'></div>
+
+	<script type="text/javascript">
+
+		/*
+		//method1正常做法
+		var box = document.getElementById('box');
+		var right_in = document.getElementById('right_in');
+		right_in.onclick = function(){
+			var text =document.getElementById('in-text').value;
+			//判别是否为数字
+			if(isNaN(text))
+				return;
+			var kk = document.createElement('div')
+			var txt = document.createTextNode(text);
+			kk.className = 'red';
+			kk.appendChild(txt);
+
+			box.appendChild(kk);
+			kk.onclick = function(){
+				alert(kk.innerHTML);
+				box.removeChild(kk);
+			}
+		};
+		var right_out = document.getElementById('right_out');
+		right_out.onclick = function(){
+			if(box.childNodes.length == 0)
+				return;
+			alert(box.lastChild.innerHTML);
+			box.removeChild(box.lastChild);
+			//若队列里无数字，则不执行；
+		}
+
+		var left_in = document.getElementById('left_in');
+		left_in.onclick = function(){
+			var text =document.getElementById('in-text').value;
+			if(isNaN(text))
+				return;
+			var kk = document.createElement('div')
+			var txt = document.createTextNode(text);
+			kk.className = 'red';
+			kk.appendChild(txt);
+			box.insertBefore(kk,box.childNodes[0]);
+			kk.onclick = function(){
+				alert(kk.innerHTML);
+				box.removeChild(kk);
+			}
+		};
+		var left_out = document.getElementById('left_out');
+		left_out.onclick = function(){
+			if(box.childNodes.length == 0)
+				return;
+			alert(box.firstChild.innerHTML);
+			box.removeChild(box.firstChild);
+		}
+		*/
+		//method2时间代理
+		var list = [];
+		var text =document.getElementById('in-text');
+		var btn = document.getElementById('btn');
+		btn.onclick = function(ev){
+			var ev = ev || window.event;
+　　　　    var target = ev.target || ev.srcElement;
+　　　　	switch(target.id.toLowerCase()){
+				case 'left_in': insertLeft();break;
+				case 'left_out': removeLeft();break;
+				case 'right_in': insertRight();break;
+				case 'right_out': removeRight();break;
+			}
+		}
+		function insertLeft(){
+			if(isNaN(text.value))
+				return;
+			list.unshift(text.value);
+			display(list);
+		}
+		function removeLeft(){
+			if(list.length == 0 )
+				return;
+			alert(list.shift());
+			display(list);
+		}
+		function insertRight(){
+			if(isNaN(text.value))
+				return;
+			list.push(text.value);
+			display(list);
+		}
+		function removeRight(){
+			if(list.length == 0 )
+				return;
+			alert(list.pop());
+			display(list);
+		}
+		function removeByValue(arr, val) {  
+			for(var i=0; i<arr.length; i++) {    
+				if(arr[i] == val) {      
+					arr.splice(i, 1);      
+					break;    
+				}  
+			}
+		}
+		function display(list){
+			box.innerHTML = '';//清空div的内容并重画
+			for(var i=0;i<list.length;i++){
+				var kk = document.createElement('div')
+				var txt = document.createTextNode(list[i]);
+				kk.className = 'red';
+				kk.appendChild(txt);
+				box.appendChild(kk);
+
+			}
+		}
+			var box = document.getElementById('box');
+			box.onclick = function(ev){
+				var ev = ev || window.event;
+	　　　　    var target = ev.target || ev.srcElement;
+				alert(target.innerHTML);
+	　　　　	removeByValue(list, target.innerHTML);
+				display(list);
+			}
+
+	
+
+
+
+	</script>
+</body>
+</html>
