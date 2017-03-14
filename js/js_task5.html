@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>task5</title>
+<style>
+		.red{
+			height: 20px;
+			width: auto;
+			background: #FF0000;
+			float: left;
+			margin:10px;
+			padding: 10px;
+			border-radius:5px;
+			cursor: pointer;
+		}
+		[type="button"]{
+			border-radius:5px;
+		}
+	</style>
+</head>
+<body>
+	<input type="text" id="in-text" \>
+	<input type="button" value="冒泡排序" id="sort" />
+	<div id='btn'>
+		<input type="button" value="左侧入" id="left_in"/>
+		<input type="button" value="右侧入" id='right_in'/>
+		<input type="button" value="左侧出" id='left_out'/>
+		<input type="button" value="右侧出" id='right_out'/>
+	</div>
+	<div id='box'></div>
+
+	<script type="text/javascript">
+
+		/*
+		//method1正常做法
+		var box = document.getElementById('box');
+		var right_in = document.getElementById('right_in');
+		right_in.onclick = function(){
+			var text =document.getElementById('in-text').value;
+			//判别是否为数字
+			if(isNaN(text))
+				return;
+			var kk = document.createElement('div')
+			var txt = document.createTextNode(text);
+			kk.className = 'red';
+			kk.appendChild(txt);
+
+			box.appendChild(kk);
+			kk.onclick = function(){
+				alert(kk.innerHTML);
+				box.removeChild(kk);
+			}
+		};
+		var right_out = document.getElementById('right_out');
+		right_out.onclick = function(){
+			if(box.childNodes.length == 0)
+				return;
+			alert(box.lastChild.innerHTML);
+			box.removeChild(box.lastChild);
+			//若队列里无数字，则不执行；
+		}
+
+		var left_in = document.getElementById('left_in');
+		left_in.onclick = function(){
+			var text =document.getElementById('in-text').value;
+			if(isNaN(text))
+				return;
+			var kk = document.createElement('div')
+			var txt = document.createTextNode(text);
+			kk.className = 'red';
+			kk.appendChild(txt);
+			box.insertBefore(kk,box.childNodes[0]);
+			kk.onclick = function(){
+				alert(kk.innerHTML);
+				box.removeChild(kk);
+			}
+		};
+		var left_out = document.getElementById('left_out');
+		left_out.onclick = function(){
+			if(box.childNodes.length == 0)
+				return;
+			alert(box.firstChild.innerHTML);
+			box.removeChild(box.firstChild);
+		}
+		*/
+		//method2时间代理
+		var list = [];
+		var text =document.getElementById('in-text');
+		var btn = document.getElementById('btn');
+		var sort = document.getElementById('sort');
+		sort.onclick = function(){
+			sortBubble(list);
+		}
+
+		btn.onclick = function(ev){
+			var ev = ev || window.event;
+　　　　    var target = ev.target || ev.srcElement;
+　　　　	switch(target.id.toLowerCase()){
+				case 'left_in': insertLeft();break;
+				case 'left_out': removeLeft();break;
+				case 'right_in': insertRight();break;
+				case 'right_out': removeRight();break;
+			}
+		}
+		function insertLeft(){
+			if(isNaN(text.value))
+				return;
+			if(text.value<10 || text.value>100){
+				alert("请输入10-100范围的数字");
+				return;
+			}
+			if(list.length<=60)	{
+				list.unshift(text.value);
+				display(list);
+			}else{
+				alert("数字数量最多为60个");
+			}
+		}
+		function removeLeft(){
+			if(list.length == 0 )
+				return;
+			alert(list.shift());
+			display(list);
+		}
+		function insertRight(){
+			if(isNaN(text.value))
+				return;
+			if(text.value<10 || text.value>100){
+				alert("请输入10-100范围的数字");
+				return;
+
+			}
+
+			if(list.length<=60)	{  //限制元素数量
+				list.push(text.value);
+				display(list);
+			}else{
+				alert("数字数量最多为60个");
+			}
+		}
+		function removeRight(){
+			if(list.length == 0 )
+				return;
+			alert(list.pop());
+			display(list);
+		}
+		function removeByValue(arr, val) {  
+			for(var i=0; i<arr.length; i++) {    
+				if(arr[i] == val) {      
+					arr.splice(i, 1);      
+					break;    
+				}  
+			}
+		}
+		function display(list){
+			box.innerHTML = '';//清空div的内容并重画
+			text.value = '';
+			for(var i=0;i<list.length;i++){
+				var kk = document.createElement('div')
+				//var txt = document.createTextNode(list[i]);
+				kk.className = 'red';
+				//kk.appendChild(txt);
+				kk.style.height = list[i] + 'px';
+				box.appendChild(kk);
+
+			}
+		}
+			var box = document.getElementById('box');
+			box.onclick = function(ev){
+				var ev = ev || window.event;
+	　　　　    var target = ev.target || ev.srcElement;
+				var num = parseInt(target.style.height)
+	　　　　	removeByValue(list, num.toString());
+				display(list);
+			}
+			function sortBubble(arr){
+				var list_num = list.map(function(item){
+					return parseInt(item);
+				})
+				var len = arr.length;
+				for(var i =0 ; i<len;i++){
+					for(var j=0;j<len-1-i;j++){
+						if(arr[j]>arr[j+1]){
+							var temp = arr[j+1];
+							arr[j+1] = arr[j];
+							arr[j] = temp;
+						}
+					}
+				}
+				display(list);
+			}
+
+	
+//还未实现可视化，以及上端对齐，按理是下端对齐
+
+
+	</script>
+</body>
+</html>
