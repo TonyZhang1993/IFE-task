@@ -83,14 +83,14 @@
 			box.removeChild(box.firstChild);
 		}
 		*/
-		//method2时间代理
+		//method2事件代理
 		var list = [];
 		var text =document.getElementById('in-text');
 		var btn = document.getElementById('btn');
 		btn.onclick = function(ev){
 			var ev = ev || window.event;
-　　　　    var target = ev.target || ev.srcElement;
-　　　　	switch(target.id.toLowerCase()){
+　　　　    	     var target = ev.target || ev.srcElement;
+　　　　		     switch(target.id.toLowerCase()){
 				case 'left_in': insertLeft();break;
 				case 'left_out': removeLeft();break;
 				case 'right_in': insertRight();break;
@@ -121,6 +121,7 @@
 			alert(list.pop());
 			display(list);
 		}
+		//移除数组中制定的元素		
 		function removeByValue(arr, val) {  
 			for(var i=0; i<arr.length; i++) {    
 				if(arr[i] == val) {      
@@ -143,9 +144,9 @@
 			var box = document.getElementById('box');
 			box.onclick = function(ev){
 				var ev = ev || window.event;
-	　　　　    var target = ev.target || ev.srcElement;
+	　　　　    	     var target = ev.target || ev.srcElement;
 				alert(target.innerHTML);
-	　　　　	removeByValue(list, target.innerHTML);
+	　　　　		     removeByValue(list, target.innerHTML);
 				display(list);
 			}
 
