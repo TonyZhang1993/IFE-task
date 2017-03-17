@@ -141,14 +141,14 @@
 
 			}
 		}
-			var box = document.getElementById('box');
-			box.onclick = function(ev){
-				var ev = ev || window.event;
-	　　　　    	     var target = ev.target || ev.srcElement;
-				alert(target.innerHTML);
-	　　　　		     removeByValue(list, target.innerHTML);
-				display(list);
-			}
+		var box = document.getElementById('box');
+		box.onclick = function(ev){
+			var ev = ev || window.event;
+		     var target = ev.target || ev.srcElement;
+			alert(target.innerHTML);
+		     removeByValue(list, target.innerHTML);
+			display(list);
+		}
 
 	
 
